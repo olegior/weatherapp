@@ -1,4 +1,4 @@
-const URL = 'http://api.openweathermap.org';
+const URL = 'https://api.openweathermap.org';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
 
 function start() {
@@ -10,7 +10,7 @@ function start() {
 function getLocation(result) {
     const { lat, lon } = JSON.parse(result)[0];
     console.log(lat, lon);
-    let req = `https://API.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&units=metric`;
+    let req = `${URL}/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&units=metric`;
     fetcher(req, create)
     let url = `${URL}/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&cnt=5&units=metric`;
     fetcher(url, forecast)
@@ -29,7 +29,8 @@ function fetcher(URL, fn) {
 
 function create(result) {
     const o = JSON.parse(result);
-    document.querySelector('.ul').append(createLi(o))
+    document.querySelector('.ul').append(createNode(
+o))
 }
 
 function forecast(result) {
@@ -40,12 +41,13 @@ function forecast(result) {
         const p = document.createElement('p');
         p.innerHTML = e.dt_txt;
         div.append(p);
-        div.append(createLi(e));
+        div.append(createNode(
+    e));
         forecastdiv.append(div);
     })
 }
 
-function createLi(o) {
+function createNode(o) {
     const toShow = {
         'fa-city': o.name,
         'fa-cloud': o.weather[0].description,
@@ -56,7 +58,7 @@ function createLi(o) {
     const ico = o.weather[0].icon;
     const img = document.querySelector('img');
     // img.src = `https://openweathermap.org/img/wn/${ico}@2x.png`;
-    img.src = `https://openweathermap.org/img/wn/${ico}.png`;
+    img.src = `${URL}/img/wn/${ico}.png`;
     // const ul = document.querySelector('.response-ul');
     const ul = document.createElement('ul');
     ul.innerHTML = ''
