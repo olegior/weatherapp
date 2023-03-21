@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="content-language" content="ru-ru">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="reset.css" />
+  <title>Погода сейчас</title>
+  <style>
+    body {
+      font-size: 24px;
+    }
+
+    .wrapper {
+      padding-top: 50px;
+      height: 100vh;
+    }
+
+    .container,
+    .response {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    form {
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .response,
+    .forecast {
+      padding-top: 30px;
+    }
+
+    .inptext {
+      width: 80%;
+    }
+
+    i {
+      margin-top: 5px;
+    }
+
+    .img {
+      border: solid rgb(184, 184, 184) 0.5px;
+      border-radius: 50%;
+    }
+
+    .forecast {
+      font-size: 16px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: flex-start;
+      overflow-x: scroll;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="form">
+        <form action="#">
+          <input type="text" class="inptext" value="Барановичи" />
+          <i class="fa-solid fa-search" onclick="start()"></i>
+        </form>
+      </div>
+      <div class="response">
+        <div class="img">
+          <img src="" alt="">
+        </div>
+        <div class="ul">
+          <!-- <ul class="response-ul"></ul> -->
+        </div>
+      </div>
+      <div class="forecast">
+      </div>
+    </div>
+  </div>
+  <script src="https://kit.fontawesome.com/84267b621c.js" crossorigin="anonymous"></script>
+  <script src="js.js"></script>
+</body>
+
+</html>
