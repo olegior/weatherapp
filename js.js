@@ -1,12 +1,30 @@
 const URL = 'https://api.openweathermap.org';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
 
-document.querySelector('.inptext').addEventListener('change',()=>start())
+document.querySelector('.inptext').addEventListener('change', () => start());
+document.querySelector('.inptext').addEventListener('keyup', (e) => {
+    if (e.code === 'Enter')
+        start();
+});
 
 function start() {
+    clear(['.ul', 'forecast']);
     const city = document.querySelector('.inptext').value;
     let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
     fetcher(req, getLocation, API)
+}
+
+function clear(arr) {
+    arr.forEach(e => {
+        console.log(e.innerText)
+        // let parent = document.querySelector(e);
+        // if (parent !== null && parent.firstChild) {
+        //     console.log(parent.firstChild);
+        //     parent.removeChild(parent.firstChild);
+        // }
+        e.innerHTML = '';
+        e.innerText = '';
+    })
 }
 
 function getLocation(result) {
@@ -31,8 +49,7 @@ function fetcher(URL, fn) {
 
 function create(result) {
     const o = JSON.parse(result);
-    document.querySelector('.ul').append(createNode(
-o))
+    document.querySelector('.ul').append(createNode(o))
 }
 
 function forecast(result) {
@@ -43,8 +60,7 @@ function forecast(result) {
         const p = document.createElement('p');
         p.innerHTML = e.dt_txt;
         div.append(p);
-        div.append(createNode(
-    e));
+        div.append(createNode(e));
         forecastdiv.append(div);
     })
 }
