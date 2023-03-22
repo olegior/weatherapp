@@ -1,6 +1,8 @@
 const URL = 'https://api.openweathermap.org';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
 
+document.querySelector('.inptext').addEventListener('change',()=>start())
+
 function start() {
     const city = document.querySelector('.inptext').value;
     let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
