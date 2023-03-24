@@ -8,11 +8,9 @@ export default function createNode(o) {
     }
     const ico = o.weather[0].icon;
     const img = document.querySelector('img');
-    // img.src = `https://openweathermap.org/img/wn/${ico}@2x.png`;
     img.src = `https://openweathermap.org/img/wn/${ico}@2x.png`;
-    // const ul = document.querySelector('.response-ul');
     const ul = document.createElement('ul');
-    ul.innerHTML = ''
+    // ul.innerHTML = ''
     Object.entries(toShow).forEach(e => {
         if (e[1] !== undefined) {
             const [key, value] = e;

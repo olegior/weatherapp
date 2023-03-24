@@ -5,7 +5,6 @@ import forecast from "./scripts/forecast.js";
 const URL = 'https://api.openweathermap.org/data/2.5';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
 
-// document.querySelector('.inptext').addEventListener('change', start);
 document.querySelector('.inptext').addEventListener('keyup', (e) => {
     if (e.code === 'Enter')
         start();
@@ -13,7 +12,7 @@ document.querySelector('.inptext').addEventListener('keyup', (e) => {
 document.querySelector('#search-btn').addEventListener('click', start)
 
 function start() {
-    // clear(['.ul', 'forecast']);
+    clear(['.current', '.forecast']);
     const city = document.querySelector('.inptext').value;
     // let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
     // fetcher(req, getLocation, API)
@@ -26,18 +25,11 @@ function start() {
     fetcher(forecastRequest, forecast);
 }
 
-// function clear(arr) {
-//     arr.forEach(e => {
-//         console.log(e.innerText)
-//         // let parent = document.querySelector(e);
-//         // if (parent !== null && parent.firstChild) {
-//         //     console.log(parent.firstChild);
-//         //     parent.removeChild(parent.firstChild);
-//         // }
-//         e.innerHTML = '';
-//         e.innerText = '';
-//     })
-// }
+function clear(arr) {
+    arr.forEach(e => {
+        document.querySelector(e).innerHTML = '';
+    })
+}
 
 // function getLocation(result) {
 //     const { lat, lon } = JSON.parse(result)[0];
@@ -64,7 +56,7 @@ function start() {
 
 function create(result) {
     const o = JSON.parse(result);
-    document.querySelector('.ul').append(createNode(o))
+    document.querySelector('.current').append(createNode(o))
 }
 
 
