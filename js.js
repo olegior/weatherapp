@@ -1,5 +1,5 @@
 import fetcher from "./scripts/fetch.js";
-import createNode from "./scripts/dom.js";
+import createNode from "./scripts/createul.js";
 import forecast from "./scripts/forecast.js";
 
 const URL = 'https://api.openweathermap.org/data/2.5';
@@ -43,19 +43,8 @@ function clear(arr) {
 //     fetcher(forecastRequest, forecast)
 // }
 
-// function fetcher(URL, fn) {
-//     const requestOptions = {
-//         method: 'GET',
-//         redirect: 'follow'
-//     };
-//     fetch(URL, requestOptions)
-//         .then(response => response.text())
-//         .then(result => fn(result))
-//         .catch(error => console.log('error', error));
-// }
-
-function create(result) {
-    const o = JSON.parse(result);
+function create(o) {
+    // const o = JSON.parse(result);
     document.querySelector('.current').append(createNode(o))
 }
 

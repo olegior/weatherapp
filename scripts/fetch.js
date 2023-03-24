@@ -5,6 +5,6 @@ export default function fetcher(URL, func) {
     };
     fetch(URL, requestOptions)
         .then(response => response.text())
-        .then(result => func(result))
+        .then(result => func(JSON.parse(result)))
         .catch(error => console.log('error', error));
 }

@@ -35,7 +35,7 @@ form {
     width: 80%;
 }
 
-li{
+span{
     word-wrap: break-word;
 }
 
@@ -52,8 +52,21 @@ li{
     align-items: flex-start;
     /* overflow-x: scroll; */
     column-gap: 20px;
-
 }
+
+.forecast>div{
+    width: 100px;
+    /* height: 100px; */
+}
+
+/* .forecast>div>ul{
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    justify-content: space-between;
+    align-items:stretch;
+    align-content:stretch;
+} */
 
 button{
     border-radius: 50%;
