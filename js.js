@@ -16,12 +16,11 @@ function start() {
     const city = document.querySelector('.inptext').value;
     // let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
     // fetcher(req, getLocation, API)
-
     let currentRequest = `${URL}/weather?q=${city}&appid=${API}&lang=ru&units=metric`;
     fetcher(currentRequest, create);
     // let url = `${URL}/forecast?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&cnt=5&units=metric`;
-    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=5&units=metric`;
-
+    // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
+    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric`;
     fetcher(forecastRequest, forecast);
 }
 

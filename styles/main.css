@@ -3,13 +3,11 @@ body {
 }
 
 .wrapper {
-    padding-top: 50px;
     height: 100vh;
 }
 
-.container{
-    max-width: 80%;
-    margin: 0 auto;
+.container {
+    max-width: 100%;
 }
 
 .container,
@@ -27,15 +25,17 @@ form {
 
 .response,
 .forecast,
-.current {
-    padding-top: 30px;
+.current,
+.form {
+    padding-top: 50px;
 }
 
-.inptext {
-    width: 80%;
-}
+/* .inptext {
+     width: 80%; 
+     border: 1px solid black; 
+} */
 
-span{
+span {
     word-wrap: break-word;
 }
 
@@ -49,26 +49,33 @@ span{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: flex-start;
+    align-items: stretch;
     /* overflow-x: scroll; */
     column-gap: 20px;
+    height: 150px;
+    /* max-width: 390px; */
+    /* width: 640px; */
+    overflow: hidden;
+    overflow-x: scroll;
+    /* box-sizing: border-box; */
+
 }
 
-.forecast>div{
-    width: 100px;
-    /* height: 100px; */
-}
-
-/* .forecast>div>ul{
+.forecast>div,
+.forecast>div>ul {
+    position:sticky;
+    width: 120px;
+    height: 100px;
     display: flex;
     flex-direction: column;
-    flex: 1 0 auto;
-    justify-content: space-between;
-    align-items:stretch;
-    align-content:stretch;
-} */
+    /* align-items: stretch; */
+    justify-content: space-evenly;
+    margin: 0 auto;
+    /* box-sizing: border-box; */
 
-button{
+}
+
+button {
     border-radius: 50%;
     height: 1.5em;
     width: 1.5em;
