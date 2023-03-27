@@ -15,6 +15,8 @@ export default function createNode(o) {
             const span = document.createElement('span');
             i.classList.add('fa-solid', key);
             span.innerHTML = ` ${value}`;
+            // if (key.includes('temperature'))
+            //     span.innerHTML += ` °C`;
             li.append(i, span);
             ul.append(li);
         }

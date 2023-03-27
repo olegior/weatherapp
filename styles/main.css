@@ -30,11 +30,6 @@ form {
     padding-top: 50px;
 }
 
-/* .inptext {
-     width: 80%; 
-     border: 1px solid black; 
-} */
-
 span {
     word-wrap: break-word;
 }
@@ -52,27 +47,30 @@ span {
     align-items: stretch;
     /* overflow-x: scroll; */
     column-gap: 20px;
-    height: 150px;
+    /* height: 150px; */
     /* max-width: 390px; */
     /* width: 640px; */
-    overflow: hidden;
-    overflow-x: scroll;
+    /* overflow: hidden;
+    overflow-x: scroll; */
     /* box-sizing: border-box; */
-
 }
 
 .forecast>div,
 .forecast>div>ul {
-    position:sticky;
-    width: 120px;
-    height: 100px;
+    /* position:sticky; */
+    /* width: 200px; */
+    /* height: 100px; */
     display: flex;
     flex-direction: column;
     /* align-items: stretch; */
     justify-content: space-evenly;
     margin: 0 auto;
-    /* box-sizing: border-box; */
+}
 
+li{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 button {
@@ -81,4 +79,10 @@ button {
     width: 1.5em;
     border: 1px solid black;
     background-color: #fff;
+}
+
+.fa-solid{
+    margin-top: 5px;
+    line-height: 1;
+    margin-right: 20px;
 }
