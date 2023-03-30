@@ -1,16 +1,18 @@
+// import makeDOM from './scripts/dom/makedom.js'
 import fetcher from "./scripts/fetch.js";
-import createNode from "./scripts/createul.js";
+import createNode from "./scripts/dom/makecurrent.js";
 import forecast from "./scripts/forecast.js";
 import getUserLocation from "./scripts/geolocation.js";
 
 const URL = 'https://api.openweathermap.org/data/2.5';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
 
+// makeDOM();
 document.querySelector('.inptext').addEventListener('keyup', (e) => {
     if (e.code === 'Enter')
         start();
 });
-document.querySelector('#search-btn').addEventListener('click', start)
+document.querySelector('#search-btn').addEventListener('click', start);
 
 function start() {
     clear(['.current', '.forecast']);
@@ -28,8 +30,8 @@ function start() {
     // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
 
     //$$$$$$$$$$$$$$$$
-    // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric&cnt=1`;
-    // fetcher(forecastRequest, forecast);
+    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric&cnt=12`;
+    fetcher(forecastRequest, forecast);
 }
 
 function clear(arr) {

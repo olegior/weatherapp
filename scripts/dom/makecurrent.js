@@ -1,7 +1,7 @@
-import CreateObject from "./createobject.js";
+import makeObject from "../makeobject.js";
 
 export default function createNode(o) {
-    const toShow = CreateObject(o);
+    const toShow = makeObject(o);
     const ico = o.weather[0].icon;
     const ul = document.createElement('ul');
     const img = document.querySelector('img');

@@ -3,7 +3,7 @@ body {
 }
 
 .wrapper {
-    height: 100vh;
+    height: calc(100vh - 220px);
 }
 
 .container {
@@ -27,7 +27,7 @@ form {
 .forecast,
 .current,
 .form {
-    padding-top: 50px;
+    padding-top: 30px;
 }
 
 span {
@@ -81,8 +81,21 @@ button {
     background-color: #fff;
 }
 
-.fa-solid{
-    margin-top: 5px;
-    line-height: 1;
+.fa-solid, .fa-regular{
+    line-height: unset !important;
+}
+
+.current i{
+    /* margin-top: 5px; */
     margin-right: 20px;
+}
+
+.forecast-item{
+    min-width: 50px;
+}
+
+.forecast-item>p{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

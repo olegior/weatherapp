@@ -1,10 +1,10 @@
-export default function fetcher(URL, func) {
+export default function fetcher(URL, fn) {
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
     fetch(URL, requestOptions)
         .then(response => response.text())
-        .then(result => func(JSON.parse(result)))
+        .then(result => fn(JSON.parse(result)))
         .catch(error => console.log('error', error));
 }

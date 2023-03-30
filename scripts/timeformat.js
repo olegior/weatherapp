@@ -10,5 +10,6 @@ export default function timeFormat(date) {
     let mm = date.getMinutes();
     mm = mm < 10 ? '0' + mm : mm;
     // console.log(`${days[day]}\n${DD} ${months[MM]}\n${hh}:${mm}`);
-    return `${days[day]}\n${DD} ${months[MM]}\n${hh}:${mm}`;
+    // return `${days[day]}\n${DD} ${months[MM]}\n${hh}:${mm}`;
+    return `${hh} ч.`;
 }
