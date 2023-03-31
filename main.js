@@ -2,7 +2,7 @@
 import fetcher from "./scripts/fetch.js";
 import createNode from "./scripts/dom/makecurrent.js";
 import forecast from "./scripts/forecast.js";
-import getUserLocation from "./scripts/geolocation.js";
+// import getUserLocation from "./scripts/geolocation.js";
 
 const URL = 'https://api.openweathermap.org/data/2.5';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
@@ -12,19 +12,24 @@ document.querySelector('.inptext').addEventListener('keyup', (e) => {
     if (e.code === 'Enter')
         start();
 });
+
 document.querySelector('#search-btn').addEventListener('click', start);
 
+document.addEventListener('DOMContentLoaded',()=>getUserLocation());
+
 function start() {
+    const city = document.querySelector('.inptext').value;
     clear(['.current', '.forecast']);
+    // getUserLocation()
     // navigator.geolocation.getCurrentPosition(success, error)
 
-    const city = document.querySelector('.inptext').value;
+    
     // let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
     // fetcher(req, getLocation, API
 
     //$$$$$$$$$$$$$$$$
     let currentRequest = `${URL}/weather?q=${city}&appid=${API}&lang=ru&units=metric`;
-    fetcher(currentRequest, create);
+    fetcher(currentRequest, current);
 
     // let url = `${URL}/forecast?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&cnt=5&units=metric`;
     // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
@@ -52,7 +57,7 @@ function clear(arr) {
 //     fetcher(forecastRequest, forecast)
 // }
 
-function create(o) {
+function current(o) {
     // const o = JSON.parse(result);
     document.querySelector('.current').append(createNode(o))
 }
@@ -60,13 +65,26 @@ function create(o) {
 
 
 function success(position) {  // если всё хорошо, собираем ссылку
+    console.log('пробуем');
     const { longitude, latitude } = position.coords;
     let req = `${URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
-    fetcher(req, create);
+    fetcher(req, current);
+    let forec = `${URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&cnt=5&units=metric`;
+    fetcher(forec, forecast);
 }
 
 function error() { // если всё плохо, просто напишем об этом
     // status.textContent = 'Не получается определить вашу геолокацию :('
-    let currentRequest = `${URL}/weather?q=${city}&appid=${API}&lang=ru&units=metric`;
-    fetcher(req, create);
+    // let currentRequest = `${URL}/weather?q=${city}&appid=${API}&lang=ru&units=metric`;
+    //let req = `${URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
+
+    // fetcher(currentRequest, create);
+    // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric&cnt=12`;
+    // fetcher(forecastRequest, forecast);
+    console.log('Не удалось получить доступ к геоданным');
+}
+
+
+function getUserLocation() {
+    navigator.geolocation.getCurrentPosition(success, error)
 }
