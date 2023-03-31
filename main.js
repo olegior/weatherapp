@@ -6,24 +6,25 @@ import forecast from "./scripts/forecast.js";
 
 const URL = 'https://api.openweathermap.org/data/2.5';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
+const quantity = 8;
 
 // makeDOM();
 document.querySelector('.inptext').addEventListener('keyup', (e) => {
     if (e.code === 'Enter')
-        start();
+        loadWeather();
 });
 
-document.querySelector('#search-btn').addEventListener('click', start);
+document.querySelector('#search-btn').addEventListener('click', loadWeather);
 
-document.addEventListener('DOMContentLoaded',()=>getUserLocation());
+document.addEventListener('DOMContentLoaded', getUserLocation);
 
-function start() {
-    const city = document.querySelector('.inptext').value;
+function loadWeather() {
+    const city = document.querySelector('.inptext').value.trim();
     clear(['.current', '.forecast']);
     // getUserLocation()
     // navigator.geolocation.getCurrentPosition(success, error)
 
-    
+
     // let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
     // fetcher(req, getLocation, API
 
@@ -35,7 +36,8 @@ function start() {
     // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
 
     //$$$$$$$$$$$$$$$$
-    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric&cnt=12`;
+    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric`;
+    // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric&cnt=${quantity}`;
     fetcher(forecastRequest, forecast);
 }
 
@@ -59,7 +61,8 @@ function clear(arr) {
 
 function current(o) {
     // const o = JSON.parse(result);
-    document.querySelector('.current').append(createNode(o))
+    document.querySelector('.current').append(createNode(o));
+    document.querySelector('.inptext').value = o.name;
 }
 
 
@@ -69,7 +72,8 @@ function success(position) {  // если всё хорошо, собираем 
     const { longitude, latitude } = position.coords;
     let req = `${URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
     fetcher(req, current);
-    let forec = `${URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&cnt=5&units=metric`;
+    // let forec = `${URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&cnt=${quantity}&units=metric`;
+    let forec = `${URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
     fetcher(forec, forecast);
 }
 
@@ -86,5 +90,5 @@ function error() { // если всё плохо, просто напишем о
 
 
 function getUserLocation() {
-    navigator.geolocation.getCurrentPosition(success, error)
+    navigator.geolocation.getCurrentPosition(success, error);
 }

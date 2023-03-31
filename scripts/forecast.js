@@ -3,24 +3,37 @@ import timeFormat from "./timeformat.js";
 
 export default function forecast(o) {
     const forecastdiv = document.querySelector('.forecast');
-    o.list.forEach(e => {
+    let divs = o.list.map(e => {
         const div = document.createElement('div');
+
+        const date = document.createElement('p');
+        const datei = document.createElement('i');
+
         const time = document.createElement('p');
-        const temp = document.createElement('p');
         const timei = document.createElement('i');
+
+        const temp = document.createElement('p');
         const tempi = document.createElement('i');
-        // i.classList.add('fa-regular', 'fa-clock', 'fa-spin');
+
         div.classList.add('forecast-item');
+        // console.log(timeFormat(new Date(e.dt_txt)));
+        const [dat, tim] = timeFormat(new Date(e.dt_txt));
+
+        datei.classList.add('fa-regular', 'fa-calendar-days');
+        date.append(datei);
+
         timei.classList.add('fa-regular', 'fa-clock');
         time.append(timei);
 
         tempi.classList.add('fa-solid', 'fa-temperature-low');
         temp.append(tempi);
-        // p.innerHTML += ` ${new Date(e.dt_txt).toLocaleString().slice(0,-3)}`;
-        time.innerHTML += ` ${timeFormat(new Date(e.dt_txt))}`;
-        temp.innerHTML += Math.round(e.main.temp)+`°C`;
-        div.append(time, temp);
-        // div.append(makeForecast(e));
-        forecastdiv.appendChild(div);
+
+        date.innerHTML += dat;
+        time.innerHTML += tim;
+        temp.innerHTML += Math.round(e.main.temp) + `°C`;
+        div.append(date, time, temp);
+        return div;
     })
+    // console.log(divs);
+    forecastdiv.append(...divs);
 }

@@ -12,7 +12,7 @@ export default function makeForecast(o) {
             const i = document.createElement('i');
             const span = document.createElement('span');
             i.classList.add('fa-solid', key);
-            span.innerHTML = ` ${value}`;
+            span.innerText = ` ${value}`;
             // if (key.includes('temperature'))
             //     span.innerHTML += ` °C`;
             li.append(i, span);

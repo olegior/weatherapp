@@ -1,5 +1,6 @@
 body {
     font-size: 24px;
+    overflow: hidden;
 }
 
 .wrapper {
@@ -43,15 +44,15 @@ span {
     font-size: 16px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     align-items: stretch;
     /* overflow-x: scroll; */
     column-gap: 20px;
     /* height: 150px; */
     /* max-width: 390px; */
-    /* width: 640px; */
-    /* overflow: hidden;
-    overflow-x: scroll; */
+    max-width: 90%;
+    overflow: hidden;
+    overflow-x: scroll;
     /* box-sizing: border-box; */
 }
 
@@ -92,6 +93,7 @@ button {
 
 .forecast-item{
     min-width: 60px;
+    position: inherit;
 }
 
 .forecast-item>p{
