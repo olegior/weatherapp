@@ -1,7 +1,9 @@
 // import makeDOM from './scripts/dom/makedom.js'
 import fetcher from "./scripts/fetch.js";
-import createNode from "./scripts/dom/makecurrent.js";
+import createNode from "./scripts/dom/createnode.js";
 import forecast from "./scripts/forecast.js";
+import makeObject from "./scripts/makeobject.js";
+// import forecastObject from "./forecastobject";
 // import getUserLocation from "./scripts/geolocation.js";
 
 const URL = 'https://api.openweathermap.org/data/2.5';
@@ -36,7 +38,7 @@ function loadWeather() {
     // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
 
     //$$$$$$$$$$$$$$$$
-    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric`;
+    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric&cnt=${quantity}`;
     // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric&cnt=${quantity}`;
     fetcher(forecastRequest, forecast);
 }
@@ -61,7 +63,7 @@ function clear(arr) {
 
 function current(o) {
     // const o = JSON.parse(result);
-    document.querySelector('.current').append(createNode(o));
+    document.querySelector('.current').append(createNode(o,makeObject));
     document.querySelector('.inptext').value = o.name;
 }
 

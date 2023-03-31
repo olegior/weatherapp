@@ -1,11 +1,11 @@
 body {
     font-size: 24px;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
-.wrapper {
-    height: calc(100vh - 80px);
-}
+/* .wrapper {
+    height: calc(100vh - 70px);
+} */
 
 .container {
     max-width: 100%;
@@ -36,7 +36,7 @@ span {
 }
 
 .img {
-    border: 1px solid black;
+    border: 1px solid rgb(224, 224, 224);
     border-radius: 50%;
 }
 
@@ -54,6 +54,7 @@ span {
     overflow: hidden;
     overflow-x: scroll;
     /* box-sizing: border-box; */
+    padding-bottom: 20px;
 }
 
 .forecast>div,
@@ -82,9 +83,9 @@ button {
     background-color: #fff;
 }
 
-.fa-solid, .fa-regular{
+/* .fa-solid, .fa-regular{
     line-height: unset !important;
-}
+} */
 
 .current i{
     /* margin-top: 5px; */
@@ -92,8 +93,10 @@ button {
 }
 
 .forecast-item{
-    min-width: 60px;
-    position: inherit;
+    /* min-width: 70px; */
+    /* position: inherit; */
+    padding-right: 5px;
+    border-right: 1px solid rgb(224, 224, 224);
 }
 
 .forecast-item>p{
@@ -101,3 +104,4 @@ button {
     flex-direction: row;
     justify-content: space-between;
 }
+

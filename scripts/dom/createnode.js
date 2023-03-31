@@ -1,6 +1,6 @@
 import makeObject from "../makeobject.js";
 
-export default function createNode(o) {
+export default function createNode(o,fn) {
     // const toShow = makeObject(o);
     const ico = o.weather[0].icon;
     const ul = document.createElement('ul');
@@ -9,7 +9,7 @@ export default function createNode(o) {
 
     
     
-    Object.entries(makeObject(o)).forEach(e => {
+    Object.entries(fn(o)).forEach(e => {
         if (e[1] !== undefined) {
             const [key, value] = e;
             const li = document.createElement('li');
