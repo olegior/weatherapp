@@ -23,7 +23,8 @@ form {
 .response,
 .forecast,
 .current,
-.form {
+.form,
+.error-message{
     padding-top: 30px;
 }
 
@@ -91,4 +92,13 @@ button {
 
 .forecast svg{
     margin-right: 15px;
+}
+
+.error-message{
+    width: 90%;
+    text-align: justify;
+}
+
+.hidden{
+    display: none;
 }

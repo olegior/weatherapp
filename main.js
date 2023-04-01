@@ -2,8 +2,9 @@ import fetcher from "./scripts/fetch.js";
 import createNode from "./scripts/dom/createnode.js";
 import forecast from "./scripts/forecast.js";
 import makeObject from "./scripts/makeobject.js";
-
-const URL = 'https://pro.openweathermap.org/data/2.5';
+import errorMessage from "./scripts/errormessage.js";
+                // pro на api
+const URL = 'https://api.openweathermap.org/data/2.5';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
 const quantity = 8;
 
@@ -24,14 +25,16 @@ function loadWeather() {
     // let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
     //$$$$$$$$$$$$$$$$
     let currentRequest = `${URL}/weather?q=${city}&appid=${API}&lang=ru&units=metric`;
-    fetcher(currentRequest, current);
+    // fetcher(currentRequest, current);
 
     // let url = `${URL}/forecast?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&cnt=5&units=metric`;
     // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
 
     //$$$$$$$$$$$$$$$$ убрать hourly
-    let forecastRequest = `${URL}/forecast/hourly?q=${city}&appid=${API}&lang=ru&units=metric`;
-    fetcher(forecastRequest, forecast);
+    // let forecastRequest = `${URL}/forecast/hourly?q=${city}&appid=${API}&lang=ru&units=metric`;
+    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric`;
+    // fetcher(forecastRequest, forecast);
+    Promise.all(Promise.resolve(fetcher(currentRequest, current)),Promise.resolve(fetcher(forecastRequest, forecast))).catch(errorMessage)
 }
 
 function clear(arr) {
@@ -55,7 +58,8 @@ function success(position) {  // если всё хорошо, собираем 
     const { longitude, latitude } = position.coords;
     let req = `${URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
     fetcher(req, current);
-    let forec = `${URL}/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
+    // let forec = `${URL}/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
+    let forec = `${URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
     fetcher(forec, forecast);
 }
 

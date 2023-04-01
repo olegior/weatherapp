@@ -1,3 +1,5 @@
+import errorMessage from "./errormessage.js";
+
 export default function fetcher(URL, fn) {
     const requestOptions = {
         method: 'GET',
@@ -6,5 +8,8 @@ export default function fetcher(URL, fn) {
     fetch(URL, requestOptions)
         .then(response => response.text())
         .then(result => fn(JSON.parse(result)))
-        .catch(error => console.log('error', error));
+        .catch(error => {
+            // errorMessage();
+            console.log('error', error);
+        })
 }
