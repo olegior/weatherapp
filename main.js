@@ -3,7 +3,7 @@ import createNode from "./scripts/dom/createnode.js";
 import forecast from "./scripts/forecast.js";
 import makeObject from "./scripts/makeobject.js";
 
-const URL = 'https://api.openweathermap.org/data/2.5';
+const URL = 'https://pro.openweathermap.org/data/2.5';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
 const quantity = 8;
 
@@ -29,8 +29,8 @@ function loadWeather() {
     // let url = `${URL}/forecast?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&cnt=5&units=metric`;
     // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
 
-    //$$$$$$$$$$$$$$$$
-    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric`;
+    //$$$$$$$$$$$$$$$$ убрать hourly
+    let forecastRequest = `${URL}/forecast/hourly?q=${city}&appid=${API}&lang=ru&units=metric`;
     fetcher(forecastRequest, forecast);
 }
 
@@ -55,7 +55,7 @@ function success(position) {  // если всё хорошо, собираем 
     const { longitude, latitude } = position.coords;
     let req = `${URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
     fetcher(req, current);
-    let forec = `${URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
+    let forec = `${URL}/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
     fetcher(forec, forecast);
 }
 
