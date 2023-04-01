@@ -3,10 +3,6 @@ body {
     overflow-x: hidden;
 }
 
-/* .wrapper {
-    height: calc(100vh - 70px);
-} */
-
 .container {
     max-width: 100%;
 }
@@ -44,27 +40,18 @@ span {
     font-size: 16px;
     display: flex;
     flex-direction: row;
-    /* justify-content: space-around; */
     align-items: stretch;
-    /* overflow-x: scroll; */
     column-gap: 20px;
-    /* height: 150px; */
-    /* max-width: 390px; */
     max-width: 90%;
     overflow: hidden;
     overflow-x: scroll;
-    /* box-sizing: border-box; */
     padding-bottom: 20px;
 }
 
 .forecast>div,
 .forecast>div>ul {
-    /* position:sticky; */
-    /* width: 200px; */
-    /* height: 100px; */
     display: flex;
     flex-direction: column;
-    /* align-items: stretch; */
     justify-content: space-evenly;
     margin: 0 auto;
 }
@@ -88,13 +75,10 @@ button {
 }
 
 .current i{
-    /* margin-top: 5px; */
     margin-right: 20px;
 }
 
 .forecast-item{
-    /* min-width: 70px; */
-    /* position: inherit; */
     padding-right: 5px;
     border-right: 1px solid rgb(224, 224, 224);
 }
