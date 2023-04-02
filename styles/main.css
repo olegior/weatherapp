@@ -4,7 +4,8 @@ body {
 }
 
 .container {
-    max-width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
 }
 
 .container,
@@ -15,9 +16,13 @@ body {
     align-items: center;
 }
 
-form {
+.form {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+}
+
+input[type='text']{
+    max-width: 80%;
 }
 
 .response,
@@ -29,12 +34,19 @@ form {
 }
 
 span {
-    word-wrap: break-word;
+    /* display: block; */
+    text-align: right;
+    /* text-justify: ; */
 }
 
-.img {
+/* .img {
     border: 1px solid rgb(224, 224, 224);
     border-radius: 50%;
+} */
+
+.img img{
+    max-width: 4em;
+    max-height: 4em;
 }
 
 .forecast {
@@ -43,10 +55,11 @@ span {
     flex-direction: row;
     align-items: stretch;
     column-gap: 20px;
-    max-width: 90%;
+    max-width: 100%;
     overflow: hidden;
     overflow-x: scroll;
     padding-bottom: 20px;
+    padding-top: 50px;
 }
 
 .forecast>div,
@@ -101,4 +114,12 @@ button {
 
 .hidden{
     display: none;
+}
+
+.svg-inline--fa{
+    margin-top: 6px;
+}
+
+.response{
+    font-size: 0.85em;
 }

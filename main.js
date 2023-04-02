@@ -1,13 +1,13 @@
 import fetcher from "./scripts/fetch.js";
 import createNode from "./scripts/dom/createnode.js";
-import forecast from "./scripts/forecast.js";
-import makeObject from "./scripts/makeobject.js";
 import errorMessage from "./scripts/errormessage.js";
-                // pro на api
-const URL = 'https://api.openweathermap.org/data/2.5';
-const API = '59000a9bcd862ca84a9068e14b8820b7';
-const quantity = 8;
+import currentObject from "./scripts/currentobject.js";
+import hoursObject from "./scripts/hoursobject.js";
 
+// const FULLURL = "http./scripts/hoursobject.jsing.com/VisualCrossingWebServices/rest/services/timeline/baranovichi/2023-04-02/2023-04-02?unitGroup=metric&key=3ZPEQPZUEKMPNDUH3EGZG9RZ2&contentType=json";
+const URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
+const URLOPTIONS = "?unitGroup=metric&contentType=json&key=";
+const APIKEY = "3ZPEQPZUEKMPNDUH3EGZG9RZ2";
 document.querySelector('.inptext').addEventListener('keyup', (e) => {
     if (e.code === 'Enter')
         loadWeather();
@@ -19,52 +19,52 @@ document.addEventListener('DOMContentLoaded', getUserLocation);
 
 function loadWeather() {
     const city = document.querySelector('.inptext').value.trim();
-    clear(['.current', '.forecast','img']);
+    clear(['.current', '.forecast', 'img']);
+    if (!document.querySelector('.error-message').classList.contains('hidden'))
+        errorMessage();
+    let uri = URL + city + "/" + new Date().toISOString().slice(0, 10) + "/" + new Date().toISOString().slice(0, 8) + (new Date().getDate() + 6) + URLOPTIONS + APIKEY;
+    fetcher(uri, allinone)
+}
 
-    // let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
-    //$$$$$$$$$$$$$$$$
-    let currentRequest = `${URL}/weather?q=${city}&appid=${API}&lang=ru&units=metric`;
-    fetcher(currentRequest, current);
+function allinone(v) {
+    // console.log(v);
+    const ico = v.currentConditions.icon;
+    document.querySelector('img').src = `./assets/icons/${ico}.svg`;
+    document.querySelector('img').style.width = '100%'
+    document.querySelector('.current').append(createNode(v, currentObject))
 
-    // let url = `${URL}/forecast?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&cnt=5&units=metric`;
-    // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
-
-    //$$$$$$$$$$$$$$$$ убрать hourly
-    // let forecastRequest = `${URL}/forecast/hourly?q=${city}&appid=${API}&lang=ru&units=metric`;
-    let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric`;
-    fetcher(forecastRequest, forecast);
-    // Promise.all(Promise.resolve(fetcher(currentRequest, current)),Promise.resolve(fetcher(forecastRequest, forecast))).catch(errorMessage)
+    for (let i = 0; i < 24; i++) {
+        const div = document.createElement('div');
+        div.classList.add('forecast-item');
+        const ico = v.days[0].hours[i].icon;
+        const img = document.createElement('img');
+        img.src = `./assets/icons/${ico}.svg`;
+        img.style.width = '75%'
+        div.append(img, createNode(v, hoursObject(i)))
+        document.querySelector('.forecast').append(div)
+    }
 }
 
 function clear(arr) {
     arr.forEach(e => {
         document.querySelector(e).innerHTML = '';
     })
-    // errorMessage();
+
 }
 
-function current(o) {
-    const ico = o.weather[0].icon;
-    const img = document.querySelector('img');
-    img.src = `https://openweathermap.org/img/wn/${ico}@2x.png`;
-    document.querySelector('.current').append(createNode(o,makeObject));
-    document.querySelector('.inptext').value = o.name;
+function success(position) { 
+    // console.log('пробуем');
+    const { latitude, longitude } = position.coords;
+    let geoCodeURL = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=59000a9bcd862ca84a9068e14b8820b7`;
+    fetcher(geoCodeURL, (r) => {
+        document.querySelector('.inptext').value = r[0].local_names.ru;
+        const city = document.querySelector('.inptext').value.trim();
+        let uri = URL + city + "/" + new Date().toISOString().slice(0, 10) + "/" + new Date().toISOString().slice(0, 8) + (new Date().getDate() + 6) + URLOPTIONS + APIKEY;
+        fetcher(uri, allinone);
+    });
 }
 
-
-
-function success(position) {  // если всё хорошо, собираем ссылку
-    console.log('пробуем');
-    const { longitude, latitude } = position.coords;
-    let req = `${URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
-    fetcher(req, current);
-    // let forec = `${URL}/forecast/hourly?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
-    let forec = `${URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${API}&lang=ru&units=metric`;
-    fetcher(forec, forecast);
-}
-
-function error() { // если всё плохо, просто напишем об этом
-    // status.textContent = 'Не получается определить вашу геолокацию :('
+function error() { 
     console.log('Не удалось получить доступ к геоданным');
 }
 
