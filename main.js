@@ -55,7 +55,7 @@ function clear(arr) {
 function success(position) { 
     // console.log('пробуем');
     const { latitude, longitude } = position.coords;
-    let geoCodeURL = `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=59000a9bcd862ca84a9068e14b8820b7`;
+    let geoCodeURL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=59000a9bcd862ca84a9068e14b8820b7`;
     fetcher(geoCodeURL, (r) => {
         document.querySelector('.inptext').value = r[0].local_names.ru;
         const city = document.querySelector('.inptext').value.trim();
