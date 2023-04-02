@@ -20,12 +20,12 @@ document.addEventListener('DOMContentLoaded', getUserLocation);
 
 function loadWeather() {
     const city = document.querySelector('.inptext').value.trim();
-    clear(['.current', '.forecast']);
+    clear(['.current', '.forecast','img']);
 
     // let req = `${URL}/geo/1.0/direct?q=${city}&appid=${API}`;
     //$$$$$$$$$$$$$$$$
     let currentRequest = `${URL}/weather?q=${city}&appid=${API}&lang=ru&units=metric`;
-    // fetcher(currentRequest, current);
+    fetcher(currentRequest, current);
 
     // let url = `${URL}/forecast?lat=${lat}&lon=${lon}&appid=${API}&lang=ru&cnt=5&units=metric`;
     // let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&cnt=8&units=metric`;
@@ -33,14 +33,15 @@ function loadWeather() {
     //$$$$$$$$$$$$$$$$ убрать hourly
     // let forecastRequest = `${URL}/forecast/hourly?q=${city}&appid=${API}&lang=ru&units=metric`;
     let forecastRequest = `${URL}/forecast?q=${city}&appid=${API}&lang=ru&units=metric`;
-    // fetcher(forecastRequest, forecast);
-    Promise.all(Promise.resolve(fetcher(currentRequest, current)),Promise.resolve(fetcher(forecastRequest, forecast))).catch(errorMessage)
+    fetcher(forecastRequest, forecast);
+    // Promise.all(Promise.resolve(fetcher(currentRequest, current)),Promise.resolve(fetcher(forecastRequest, forecast))).catch(errorMessage)
 }
 
 function clear(arr) {
     arr.forEach(e => {
         document.querySelector(e).innerHTML = '';
     })
+    // errorMessage();
 }
 
 function current(o) {
