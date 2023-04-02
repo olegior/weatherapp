@@ -8,7 +8,6 @@ const URL = 'https://api.openweathermap.org/data/2.5';
 const API = '59000a9bcd862ca84a9068e14b8820b7';
 const quantity = 8;
 
-// makeDOM();
 document.querySelector('.inptext').addEventListener('keyup', (e) => {
     if (e.code === 'Enter')
         loadWeather();
