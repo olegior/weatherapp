@@ -13,7 +13,7 @@ export default function createNode(o,fn) {
             ul.appendChild(li);
         }
         else {
-            console.log('пропушено поле', e);
+            console.log('пропущено поле', e);
         }
     });
     return ul;

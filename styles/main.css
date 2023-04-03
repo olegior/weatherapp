@@ -21,7 +21,7 @@ body {
     justify-content: space-between;
 }
 
-input[type='text']{
+input[type='text'] {
     max-width: 80%;
 }
 
@@ -29,7 +29,7 @@ input[type='text']{
 .forecast,
 .current,
 .form,
-.error-message{
+.error-message {
     padding-top: 30px;
 }
 
@@ -44,7 +44,7 @@ span {
     border-radius: 50%;
 } */
 
-.img img{
+.img img {
     max-width: 4em;
     max-height: 4em;
 }
@@ -58,7 +58,7 @@ span {
     max-width: 100%;
     overflow: hidden;
     overflow-x: scroll;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     padding-top: 50px;
 }
 
@@ -70,7 +70,7 @@ span {
     margin: 0 auto;
 }
 
-li{
+li {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -84,42 +84,65 @@ button {
     background-color: #fff;
 }
 
-.fa-solid, .fa-regular{
+.fa-solid,
+.fa-regular {
     line-height: unset !important;
 }
 
-.current svg{
+.current svg {
     padding-right: 20px;
 }
 
-.forecast-item{
-    padding-right: 5px;
+.forecast-item {
+    padding-right: 10px;
     border-right: 1px solid rgb(224, 224, 224);
 }
 
-.forecast-item>p{
+.forecast-item>p {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.forecast svg{
+.forecast svg {
     margin-right: 15px;
 }
 
-.error-message{
+.error-message {
     width: 90%;
     text-align: justify;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.svg-inline--fa{
+.svg-inline--fa {
     margin-top: 6px;
 }
 
-.response{
+.response {
     font-size: 0.85em;
+}
+
+.now {
+    /* border: 1px solid rgb(38, 124, 103); */
+    /* padding: 10px; */
+    border: 0;
+    outline: 2px solid rgb(38, 124, 103);
+    outline-offset: 10px;
+    border-radius: 5px;
+    /* font-size: 2em; */
+
+}
+
+#map {
+    height: 30vh;
+}
+
+.mapbox{
+    width: 90%;
+    margin:50px 0;
+    max-width: 640px;
+    max-height: 480px;
 }

@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="./styles/main.css" />
   <link rel="stylesheet" href="./assets/css/all.min.css">
   <script src="./scripts/fontawesome/all.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
   <title>Погода сейчас</title>
 </head>
 
@@ -21,7 +26,8 @@
         <button id="search-btn"><i class="fa-solid fa-search"></i></button>
       </div>
       <div class="error-message hidden">
-        К сожалению по данному запросу ничего не найдено, проверьте правильность ввода или включите определение геолокациии.
+        <!-- К сожалению по данному запросу ничего не найдено, проверьте правильность ввода или включите определение геолокациии. -->
+        Произошла ошибка, попробуйте выполнить новый запрос.
       </div>
       <div class="response">
         <div class="img">
@@ -31,6 +37,9 @@
         </div>
       </div>
       <div class="forecast">
+      </div>
+      <div class="mapbox">
+        <div id="map"></div>
       </div>
     </div>
   </div>

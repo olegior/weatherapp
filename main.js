@@ -3,6 +3,7 @@ import createNode from "./scripts/dom/createnode.js";
 import errorMessage from "./scripts/errormessage.js";
 import currentObject from "./scripts/currentobject.js";
 import hoursObject from "./scripts/hoursobject.js";
+import setMap from "./scripts/map.js";
 
 // const FULLURL = "http./scripts/hoursobject.jsing.com/VisualCrossingWebServices/rest/services/timeline/baranovichi/2023-04-02/2023-04-02?unitGroup=metric&key=3ZPEQPZUEKMPNDUH3EGZG9RZ2&contentType=json";
 const URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
@@ -27,7 +28,7 @@ function loadWeather() {
 }
 
 function allinone(v) {
-    // console.log(v);
+    console.dir(v);
     const ico = v.currentConditions.icon;
     document.querySelector('img').src = `./assets/icons/${ico}.svg`;
     document.querySelector('img').style.width = '100%'
@@ -39,10 +40,17 @@ function allinone(v) {
         const ico = v.days[0].hours[i].icon;
         const img = document.createElement('img');
         img.src = `./assets/icons/${ico}.svg`;
-        img.style.width = '75%'
-        div.append(img, createNode(v, hoursObject(i)))
-        document.querySelector('.forecast').append(div)
+        img.style.width = '75%';
+        div.append(img, createNode(v, hoursObject(i)));
+        if (v.currentConditions.datetime.slice(0, 2) == i) {
+            div.classList.add('now');
+        }
+        document.querySelector('.forecast').append(div);
     }
+
+    // document.querySelector('.now').scrollIntoView({behavior: "smooth",  inline : 'end'});
+    const { latitude, longitude } = v;
+    setMap([latitude, longitude]);
 }
 
 function clear(arr) {
@@ -52,7 +60,7 @@ function clear(arr) {
 
 }
 
-function success(position) { 
+function success(position) {
     // console.log('пробуем');
     const { latitude, longitude } = position.coords;
     let geoCodeURL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=59000a9bcd862ca84a9068e14b8820b7`;
@@ -61,10 +69,12 @@ function success(position) {
         const city = document.querySelector('.inptext').value.trim();
         let uri = URL + city + "/" + new Date().toISOString().slice(0, 10) + "/" + new Date().toISOString().slice(0, 8) + (new Date().getDate() + 6) + URLOPTIONS + APIKEY;
         fetcher(uri, allinone);
+        // setMap([latitude,longitude]);
     });
+
 }
 
-function error() { 
+function error() {
     console.log('Не удалось получить доступ к геоданным');
 }
 
