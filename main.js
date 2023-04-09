@@ -1,9 +1,10 @@
-import fetcher from "./scripts/fetch.js";
-import createNode from "./scripts/dom/createnode.js";
-import errorMessage from "./scripts/errormessage.js";
-import currentObject from "./scripts/currentobject.js";
-import hoursObject from "./scripts/hoursobject.js";
-import setMap from "./scripts/map.js";
+import fetcher from "./scripts/app/fetch.js";
+import createNode from "./scripts/app/createnode.js";
+import errorMessage from "./scripts/app/errormessage.js";
+import currentObject from "./scripts/app/currentobject.js";
+import hoursObject from "./scripts/app/hoursobject.js";
+import daysObject from "./scripts/app/daysobject.js";
+import setMap from "./scripts/app/map.js";
 
 // const FULLURL = "http./scripts/hoursobject.jsing.com/VisualCrossingWebServices/rest/services/timeline/baranovichi/2023-04-02/2023-04-02?unitGroup=metric&key=3ZPEQPZUEKMPNDUH3EGZG9RZ2&contentType=json";
 const URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
@@ -20,15 +21,15 @@ document.addEventListener('DOMContentLoaded', getUserLocation);
 
 function loadWeather() {
     const city = document.querySelector('.inptext').value.trim();
-    clear(['.current', '.forecast', 'img']);
+    clear(['.current', '.forecast', 'img', '.week']);
     if (!document.querySelector('.error-message').classList.contains('hidden'))
         errorMessage();
-    let uri = URL + city + "/" + new Date().toISOString().slice(0, 10) + "/" + new Date().toISOString().slice(0, 8) + (new Date().getDate() + 6) + URLOPTIONS + APIKEY;
+    let uri = `${URL + city}/${new Date().toISOString().slice(0, 10)}/${new Date().toISOString().slice(0, 8) + (new Date().getDate() + 6) + URLOPTIONS + APIKEY}`;
     fetcher(uri, allinone)
 }
 
 function allinone(v) {
-    console.dir(v);
+    // console.dir(v);
     const ico = v.currentConditions.icon;
     document.querySelector('img').src = `./assets/icons/${ico}.svg`;
     document.querySelector('img').style.width = '100%'
@@ -41,16 +42,25 @@ function allinone(v) {
         const img = document.createElement('img');
         img.src = `./assets/icons/${ico}.svg`;
         img.style.width = '75%';
+        // img.style.height = '50px';
         div.append(img, createNode(v, hoursObject(i)));
         if (v.currentConditions.datetime.slice(0, 2) == i) {
             div.classList.add('now');
         }
-        document.querySelector('.forecast').append(div);
+        // document.querySelector('.forecast').append(div);
     }
 
     // document.querySelector('.now').scrollIntoView({behavior: "smooth",  inline : 'end'});
     const { latitude, longitude } = v;
+
+    const days = [...v.days];
+    // console.log(days);
+    // days.forEach((e, i) => {
+    //     if (i !== 0)
+    //         document.querySelector('.week').append(createNode(e, daysObject), document.createElement('hr'))
+    // })
     setMap([latitude, longitude]);
+
 }
 
 function clear(arr) {

@@ -1,5 +1,5 @@
 body {
-    font-size: 24px;
+    font-size: 20px;
     overflow-x: hidden;
 }
 
@@ -58,7 +58,7 @@ span {
     max-width: 100%;
     overflow: hidden;
     overflow-x: scroll;
-    padding-bottom: 15px;
+    padding-bottom: 50px;
     padding-top: 50px;
 }
 
@@ -120,10 +120,10 @@ button {
 .svg-inline--fa {
     margin-top: 6px;
 }
-
-.response {
+/* 
+.response, .week {
     font-size: 0.85em;
-}
+} */
 
 .now {
     /* border: 1px solid rgb(38, 124, 103); */

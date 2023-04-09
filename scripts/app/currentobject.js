@@ -9,8 +9,6 @@ export default function currentObject(o) {
         'fa-dumbbell' : o.currentConditions.pressure+` мм`,
         'fa-droplet' : o.currentConditions.humidity+` %`,
         'fa-wind' : o.currentConditions.windspeed+` м/с`,
-        'fa-wind' : o.currentConditions.windspeed+` м/с`,
-        'fa-wind' : o.currentConditions.windspeed+` м/с`,
         'fa-sun' : o.currentConditions.sunrise,
         'fa-cloud-sun' : o.currentConditions.sunset,
     }
