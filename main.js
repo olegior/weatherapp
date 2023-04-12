@@ -47,18 +47,21 @@ function allinone(v) {
         if (v.currentConditions.datetime.slice(0, 2) == i) {
             div.classList.add('now');
         }
-        // document.querySelector('.forecast').append(div);
+        document.querySelector('.forecast').append(div);
     }
 
-    // document.querySelector('.now').scrollIntoView({behavior: "smooth",  inline : 'end'});
+    document.querySelector('.now').scrollIntoView({behavior: "smooth",  inline : 'center'});
     const { latitude, longitude } = v;
 
     const days = [...v.days];
-    // console.log(days);
-    // days.forEach((e, i) => {
-    //     if (i !== 0)
-    //         document.querySelector('.week').append(createNode(e, daysObject), document.createElement('hr'))
-    // })
+    console.log(days);
+    days.forEach((e, i) => {
+        const div = document.createElement('div');
+        div.classList.add('week-item','section');
+        div.append(createNode(e, daysObject), document.createElement('hr'));
+        if (i !== 0)
+            document.querySelector('.week').append(div);
+    })
     setMap([latitude, longitude]);
 
 }
