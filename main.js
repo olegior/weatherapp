@@ -54,7 +54,7 @@ function allinone(v) {
     const { latitude, longitude } = v;
 
     const days = [...v.days];
-    console.log(days);
+    // console.log(days);
     days.forEach((e, i) => {
         const div = document.createElement('div');
         div.classList.add('week-item','section');
