@@ -552,9 +552,9 @@ video {
 
 body {
   --tw-bg-opacity: 1;
-  background-color: rgb(28 39 62 / var(--tw-bg-opacity));
+  background-color: rgb(66 122 161 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
-  color: rgb(28 39 62 / var(--tw-text-opacity));
+  color: rgb(27 27 30 / var(--tw-text-opacity));
 }
 
 .wrapper {
@@ -587,7 +587,7 @@ body {
   margin-bottom: 1.25rem;
   border-radius: 1.5rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(249 241 172 / var(--tw-bg-opacity));
+  background-color: rgb(251 255 254 / var(--tw-bg-opacity));
   padding: 1.25rem;
 }
 
@@ -599,7 +599,7 @@ body {
   justify-content: space-between;
   border-width: 4px;
   --tw-border-opacity: 1;
-  border-color: rgb(54 106 110 / var(--tw-border-opacity));
+  border-color: rgb(114 155 121 / var(--tw-border-opacity));
 }
 
 input[type="text"] {
@@ -607,7 +607,7 @@ input[type="text"] {
   border-radius: 0.25rem;
   border-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgb(71 85 105 / var(--tw-border-opacity));
+  border-color: rgb(114 155 121 / var(--tw-border-opacity));
   background-color: transparent;
   text-align: center;
 }
@@ -659,7 +659,7 @@ li {
   outline-style: solid;
   outline-width: 4px;
   outline-offset: 8px;
-  outline-color: #366A6E;
+  outline-color: #729B79;
 }
 
 .forecast-item img {

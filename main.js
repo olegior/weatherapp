@@ -58,7 +58,8 @@ function allinone(v) {
     days.forEach((e, i) => {
         const div = document.createElement('div');
         div.classList.add('week-item','section');
-        div.append(createNode(e, daysObject), document.createElement('hr'));
+        // div.append(createNode(e, daysObject), document.createElement('hr'));
+        div.append(createNode(e, daysObject));
         if (i !== 0)
             document.querySelector('.week').append(div);
     })
