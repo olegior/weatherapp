@@ -24,7 +24,12 @@ function loadWeather() {
     clear(['.current', '.forecast', 'img', '.week']);
     if (!document.querySelector('.error-message').classList.contains('hidden'))
         errorMessage();
-    let uri = `${URL + city}/${new Date().toISOString().slice(0, 10)}/${new Date().toISOString().slice(0, 8) + (new Date().getDate() + 6) + URLOPTIONS + APIKEY}`;
+
+    /// переделать под ф-цию
+    const currentDate = new Date();
+    const fromDate = currentDate.toISOString().slice(0, 10);
+    const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
+    let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS + APIKEY}`;
     fetcher(uri, allinone)
 }
 
@@ -50,14 +55,14 @@ function allinone(v) {
         document.querySelector('.forecast').append(div);
     }
 
-    document.querySelector('.now').scrollIntoView({behavior: "smooth",  inline : 'center'});
+    document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
     const { latitude, longitude } = v;
 
     const days = [...v.days];
     // console.log(days);
     days.forEach((e, i) => {
         const div = document.createElement('div');
-        div.classList.add('week-item','section');
+        div.classList.add('week-item', 'section');
         // div.append(createNode(e, daysObject), document.createElement('hr'));
         div.append(createNode(e, daysObject));
         if (i !== 0)
@@ -81,7 +86,11 @@ function success(position) {
     fetcher(geoCodeURL, (r) => {
         document.querySelector('.inptext').value = r[0].local_names.ru;
         const city = document.querySelector('.inptext').value.trim();
-        let uri = URL + city + "/" + new Date().toISOString().slice(0, 10) + "/" + new Date().toISOString().slice(0, 8) + (new Date().getDate() + 6) + URLOPTIONS + APIKEY;
+        const currentDate = new Date();
+        const fromDate = currentDate.toISOString().slice(0, 10);
+        const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
+
+        let uri = URL + city + "/" + fromDate + "/" + toDate + URLOPTIONS + APIKEY;
         fetcher(uri, allinone);
         // setMap([latitude,longitude]);
     });
