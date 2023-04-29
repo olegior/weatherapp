@@ -1,36 +1,52 @@
 <!DOCTYPE html>
-<html lang="ru-ru">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta http-equiv="content-language" content="ru-ru">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./styles/reset.css" />
-  <link rel="stylesheet" href="./styles/main.css" />
+  <!-- <link rel="stylesheet" href="./styles/reset.css" /> -->
+  <!-- <link rel="stylesheet" href="./styles/main.css" /> -->
   <link rel="stylesheet" href="./assets/css/all.min.css">
-  <script src="./scripts/fontawesome/all.min.js" crossorigin="anonymous"></script>
+  <script src="./scripts/system/all.min.js" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="./ignore/out.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
   <title>Погода сейчас</title>
 </head>
 
 <body>
+  <div class="form">
+    <input type="text" class="inptext" value="" />
+    <button id="search-btn"><i class="fa-solid fa-search"></i></button>
+  </div>
   <div class="wrapper">
     <div class="container">
-      <div class="form">
-        <input type="text" class="inptext" value="" />
-        <button id="search-btn"><i class="fa-solid fa-search"></i></button>
+      <div class="error-message hidden section">
+        <!-- К сожалению по данному запросу ничего не найдено, проверьте правильность ввода или включите определение геолокациии. -->
+        Произошла ошибка, попробуйте выполнить новый запрос.
       </div>
-      <div class="error-message hidden">
-        К сожалению по данному запросу ничего не найдено, проверьте правильность ввода или включите определение геолокациии.
-      </div>
-      <div class="response">
-        <div class="img">
-          <img src="" alt="">
+      <div class="weatherapp hidden">
+        <div class="response section">
+          <div class="img ">
+            <img src="" alt="">
+          </div>
+          <div class="current">
+          </div>
         </div>
-        <div class="current">
+        <div class="forecast section">
         </div>
-      </div>
-      <div class="forecast">
+        <div class="week">
+
+        </div>
+        <div class="mapbox section">
+          <div id="map"></div>
+        </div>
       </div>
     </div>
   </div>

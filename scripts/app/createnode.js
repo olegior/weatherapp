@@ -1,6 +1,5 @@
 export default function createNode(o,fn) {
     const ul = document.createElement('ul');
-
     Object.entries(fn(o)).forEach(e => {
         if (e[1] !== undefined) {
             const [key, value] = e;
@@ -13,7 +12,7 @@ export default function createNode(o,fn) {
             ul.appendChild(li);
         }
         else {
-            console.log('пропушено поле', e);
+            console.log('пропущено поле', e);
         }
     });
     return ul;
