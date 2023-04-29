@@ -31,7 +31,7 @@ function loadWeather() {
     const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
     let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS + APIKEY}`;
     fetcher(uri, allinone);
-    
+
 }
 
 function allinone(v) {
@@ -56,7 +56,6 @@ function allinone(v) {
         document.querySelector('.forecast').append(div);
     }
 
-    document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
     const { latitude, longitude } = v;
 
     const days = [...v.days];
@@ -74,6 +73,10 @@ function allinone(v) {
     const weather = document.querySelector('.weatherapp');
     if (weather.classList.contains('hidden'))
         weather.classList.remove('hidden');
+
+
+    document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
+
 }
 
 function clear(arr) {
