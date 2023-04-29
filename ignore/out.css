@@ -600,6 +600,9 @@ body {
   border-width: 4px;
   --tw-border-opacity: 1;
   border-color: rgb(114 155 121 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(251 255 254 / var(--tw-bg-opacity));
+  padding: 1.25rem;
 }
 
 input[type="text"] {
@@ -608,7 +611,6 @@ input[type="text"] {
   border-width: 2px;
   --tw-border-opacity: 1;
   border-color: rgb(114 155 121 / var(--tw-border-opacity));
-  background-color: transparent;
   text-align: center;
 }
 
@@ -647,6 +649,10 @@ li {
   min-width: 25%;
   flex-direction: column;
   align-items: stretch;
+}
+
+.error-message {
+  text-align: center;
 }
 
 /* .forecast-item::after{

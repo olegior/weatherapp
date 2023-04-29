@@ -30,7 +30,8 @@ function loadWeather() {
     const fromDate = currentDate.toISOString().slice(0, 10);
     const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
     let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS + APIKEY}`;
-    fetcher(uri, allinone)
+    fetcher(uri, allinone);
+    
 }
 
 function allinone(v) {
@@ -70,6 +71,9 @@ function allinone(v) {
     })
     setMap([latitude, longitude]);
 
+    const weather = document.querySelector('.weatherapp');
+    if (weather.classList.contains('hidden'))
+        weather.classList.remove('hidden');
 }
 
 function clear(arr) {
@@ -93,6 +97,7 @@ function success(position) {
         let uri = URL + city + "/" + fromDate + "/" + toDate + URLOPTIONS + APIKEY;
         fetcher(uri, allinone);
         // setMap([latitude,longitude]);
+
     });
 
 }
