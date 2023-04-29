@@ -603,6 +603,8 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(251 255 254 / var(--tw-bg-opacity));
   padding: 1.25rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 input[type="text"] {
