@@ -2,7 +2,7 @@ export default function daysObject(o) {
     // console.log('days');
     return {
         'fa': o.conditions,
-        'fa-clock': o.datetime,
+        // 'fa-clock': o.datetime,
         'fa-city': o.description,
         'fa-temperature-full': Math.round(o.temp)+`°C`,
         'fa-temperature-quarter': Math.round(o.feelslike)+`°C`,

@@ -5,19 +5,20 @@ import currentObject from "./scripts/app/currentobject.js";
 import hoursObject from "./scripts/app/hoursobject.js";
 import daysObject from "./scripts/app/daysobject.js";
 import setMap from "./scripts/app/map.js";
+import changeVisibility from './scripts/app/changevisibility.js'
 
 // const FULLURL = "http./scripts/hoursobject.jsing.com/VisualCrossingWebServices/rest/services/timeline/baranovichi/2023-04-02/2023-04-02?unitGroup=metric&key=3ZPEQPZUEKMPNDUH3EGZG9RZ2&contentType=json";
 const URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
-const URLOPTIONS = "?unitGroup=metric&contentType=json&key=";
-const APIKEY = "3ZPEQPZUEKMPNDUH3EGZG9RZ2";
-document.querySelector('.inptext').addEventListener('keyup', (e) => {
-    if (e.code === 'Enter')
-        loadWeather();
-});
+const URLOPTIONS = "?unitGroup=metric&contentType=json&key=3ZPEQPZUEKMPNDUH3EGZG9RZ2";
 
-document.querySelector('#search-btn').addEventListener('click', loadWeather);
-
-document.addEventListener('DOMContentLoaded', getUserLocation);
+(function addEventListeners() {
+    document.querySelector('.inptext').addEventListener('keyup', (e) => {
+        if (e.code === 'Enter' || e.keyCode === 13 || e.keyCode === 10)
+            loadWeather();
+    });
+    document.querySelector('#search-btn').addEventListener('click', loadWeather);
+    document.addEventListener('DOMContentLoaded', getUserLocation);
+})()
 
 function loadWeather() {
     const city = document.querySelector('.inptext').value.trim();
@@ -28,54 +29,92 @@ function loadWeather() {
     /// переделать под ф-цию
     const currentDate = new Date();
     const fromDate = currentDate.toISOString().slice(0, 10);
+    // const fromDate = new Date(currentDate.setDate(currentDate.getDate() + 1)).toISOString().slice(0, 10);
     const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
-    let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS + APIKEY}`;
+    let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS}`;
+    // console.log(uri);
     fetcher(uri, allinone);
-
 }
 
-function allinone(v) {
-    // console.dir(v);
-    const ico = v.currentConditions.icon;
+function allinone(weatherObject) {
+    // console.dir(weatherObject);
+    const ico = weatherObject.currentConditions.icon;
     document.querySelector('img').src = `./assets/icons/${ico}.svg`;
-    document.querySelector('img').style.width = '100%'
-    document.querySelector('.current').append(createNode(v, currentObject))
+    document.querySelector('.current').append(createNode(weatherObject, currentObject));
 
-    for (let i = 0; i < 24; i++) {
-        const div = document.createElement('div');
-        div.classList.add('forecast-item');
-        const ico = v.days[0].hours[i].icon;
-        const img = document.createElement('img');
-        img.src = `./assets/icons/${ico}.svg`;
-        img.style.width = '75%';
-        // img.style.height = '50px';
-        div.append(img, createNode(v, hoursObject(i)));
-        if (v.currentConditions.datetime.slice(0, 2) == i) {
-            div.classList.add('now');
-        }
-        document.querySelector('.forecast').append(div);
-    }
+    // for (let i = 0; i < 24; i++) {
+    //     const div = document.createElement('div');
+    //     div.classList.add('forecast-item');
+    //     const ico = v.days[0].hours[i].icon;
+    //     const img = document.createElement('img');
+    //     img.src = `./assets/icons/${ico}.svg`;
+    //     img.style.width = '75%';
+    //     // img.style.height = '50px';
+    //     div.append(img, createNode(v, hoursObject(i)));
+    //     if (v.currentConditions.datetime.slice(0, 2) == i) {
+    //         div.classList.add('now');
+    //     }
+    //     document.querySelector('.forecast').append(div);
+    // }
 
-    const { latitude, longitude } = v;
+    const { latitude, longitude } = weatherObject;
 
-    const days = [...v.days];
+    const days = [...weatherObject.days];
     // console.log(days);
     days.forEach((e, i) => {
         const div = document.createElement('div');
-        div.classList.add('week-item', 'section');
-        // div.append(createNode(e, daysObject), document.createElement('hr'));
-        div.append(createNode(e, daysObject));
-        if (i !== 0)
-            document.querySelector('.week').append(div);
+        div.classList.add('week-day', 'item');
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'week-radio';
+        radio.id = 'day-' + i;
+        radio.value = radio.id;
+        const label = document.createElement('label');
+        label.setAttribute('for', radio.id);
+
+        label.innerHTML = `<i class="fa-regular fa-calendar-days"></i> ${new Date(e.datetime).toLocaleDateString()}`;
+
+        div.append(radio, label);
+        const contendDiv = document.createElement('div');
+        contendDiv.classList.add('content', 'hidden')
+        // forecastDiv.classList.add('forecast')
+        contendDiv.append(createNode(e, daysObject));
+
+        const forecast = document.createElement('div');
+        forecast.classList.add('forecast', 'hidden');
+        const { hours } = e;
+        // console.log(hours);
+        // e.hours.forEach({
+        hours.forEach(hour => {
+            const div = document.createElement('div');
+            div.classList.add('forecast-item');
+            const ico = hour.icon;
+            const img = document.createElement('img');
+            img.src = `./assets/icons/${ico}.svg`;
+            // img.style.width = '50%';
+            //     // img.style.height = '50px';
+            div.append(img, createNode(hour, hoursObject(i)));
+            // if (v.currentConditions.datetime.slice(0, 2) == i) {
+            //     div.classList.add('now');
+            // }
+            forecast.append(div);
+        })
+        // })
+
+        div.append(contendDiv, forecast);
+        // if (i !== 0)
+        document.querySelector('.week').append(div);
+        div.classList.add(radio.id)
     })
-    setMap([latitude, longitude]);
+
 
     const weather = document.querySelector('.weatherapp');
     if (weather.classList.contains('hidden'))
         weather.classList.remove('hidden');
+    setMap([latitude, longitude]);
 
-
-    document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
+    document.querySelectorAll('input[type=radio').forEach(e => e.addEventListener('change', showDayInformation));
+    // document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
 
 }
 
@@ -83,33 +122,44 @@ function clear(arr) {
     arr.forEach(e => {
         document.querySelector(e).innerHTML = '';
     })
-
 }
 
 function success(position) {
     // console.log('пробуем');
     const { latitude, longitude } = position.coords;
     let geoCodeURL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=59000a9bcd862ca84a9068e14b8820b7`;
-    fetcher(geoCodeURL, (r) => {
-        document.querySelector('.inptext').value = r[0].local_names.ru;
+    fetcher(geoCodeURL, (response) => {
+        document.querySelector('.inptext').value = response[0].local_names.ru;
         const city = document.querySelector('.inptext').value.trim();
         const currentDate = new Date();
         const fromDate = currentDate.toISOString().slice(0, 10);
         const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
-
-        let uri = URL + city + "/" + fromDate + "/" + toDate + URLOPTIONS + APIKEY;
+        let uri = URL + city + "/" + fromDate + "/" + toDate + URLOPTIONS;
         fetcher(uri, allinone);
-        // setMap([latitude,longitude]);
-
     });
 
 }
 
 function error() {
-    console.log('Не удалось получить доступ к геоданным');
+    console.log('Не удалось получить доступ к геоданным...');
 }
-
 
 function getUserLocation() {
     navigator.geolocation.getCurrentPosition(success, error);
+}
+
+function showDayInformation() {
+    const days = document.querySelectorAll('.week-day');
+    // console.dir([...days[0].childNodes].filter(e=>e.localName==='div').forEach(e=>e.classList.remove('hidden')));
+
+    days.forEach(e=>{
+        if (e.children[0].checked){
+            e.children[2].classList.remove('hidden');
+            e.children[3].classList.remove('hidden');
+        }
+        else{
+            e.children[2].classList.add('hidden');
+            e.children[3].classList.add('hidden');
+        }
+    })
 }

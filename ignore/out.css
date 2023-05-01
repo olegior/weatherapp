@@ -591,13 +591,26 @@ body {
   padding: 1.25rem;
 }
 
+.item {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 1.5rem;
+  border-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(114 155 121 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(251 255 254 / var(--tw-bg-opacity));
+  padding: 1rem;
+}
+
 .form {
   position: sticky;
   top: 0px;
+  z-index: 10;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-width: 4px;
+  border-bottom-width: 4px;
   --tw-border-opacity: 1;
   border-color: rgb(114 155 121 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
@@ -616,9 +629,18 @@ input[type="text"] {
   text-align: center;
 }
 
-/* button{
-        @apply block h-18 w-18 border-2 border-slate-700;
+input[type="radio"] {
+  display: none;
+}
+
+/* input[type="radio"]:checked+label {
+        @apply hidden;
     } */
+
+label {
+  display: block;
+  text-align: center;
+}
 
 li {
   display: flex;
@@ -627,15 +649,28 @@ li {
   text-align: left;
 }
 
-/* svg{
-        @apply body;
+/* .content{
+        @apply border-b-2 border-element;
     } */
 
-/* span{
-        @apply block;
-    } */
+.response {
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (min-width: 640px) {
+  .response {
+    display: flex;
+  }
+
+  .response-current, .mapbox {
+    width: 48%;
+  }
+}
 
 .forecast {
+  margin-top: 1.25rem;
   display: flex;
   max-width: 100%;
   flex-direction: row;
@@ -645,22 +680,21 @@ li {
 }
 
 .forecast-item {
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   display: flex;
-  min-width: 25%;
+  min-width: 30%;
   flex-direction: column;
   align-items: stretch;
+}
+
+.forecast-item>img {
+  margin-bottom: 0px;
 }
 
 .error-message {
   text-align: center;
 }
-
-/* .forecast-item::after{
-        content : ' ';
-        @apply border-r-2 border-border
-    } */
 
 .now {
   border-radius: 1.5rem;
@@ -671,25 +705,38 @@ li {
 }
 
 .forecast-item img {
+  height: 2.5rem;
+  width: 2.5rem;
   align-self: center;
 }
 
-/* .week-item{
-        @apply border-4 border-border;
-    } */
-
 #map {
+  z-index: 0;
   height: 30vh;
+}
+
+@media (min-width: 640px) {
+  #map {
+    height: 100%;
+  }
 }
 
 img {
   margin-bottom: 1.25rem;
   height: 5rem;
-  width: 5rem;
+  width: 100%;
 }
 
 span {
   text-align: right;
+}
+
+h2 {
+  padding-bottom: 1rem;
+  text-align: center;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 300;
 }
 
 .inline {
@@ -702,4 +749,8 @@ span {
 
 .border {
   border-width: 1px;
+}
+
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
