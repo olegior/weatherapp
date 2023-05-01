@@ -2,7 +2,7 @@ export default function currentObject(o) {
     return {
         'fa-city': o.address,
         // 'fa-city': o.resolvedAddress,
-        'fa-clock': o.currentConditions.datetime,
+        // 'fa-clock': o.currentConditions.datetime,
         'fa-cloud': o.currentConditions.conditions,
         'fa-temperature-full': Math.round(o.currentConditions.temp)+`°C`,
         'fa-temperature-quarter': Math.round(o.currentConditions.feelslike)+`°C`,

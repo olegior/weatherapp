@@ -25,14 +25,8 @@ function loadWeather() {
     // clear(['.current', '.forecast', 'img', '.week']);
     if (!document.querySelector('.error-message').classList.contains('hidden'))
         errorMessage();
-
-    /// переделать под ф-цию
-    const currentDate = new Date();
-    const fromDate = currentDate.toISOString().slice(0, 10);
-    // const fromDate = new Date(currentDate.setDate(currentDate.getDate() + 1)).toISOString().slice(0, 10);
-    const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
+    const { fromDate, toDate } = getCurrentDate();
     let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS}`;
-    // console.log(uri);
     fetcher(uri, allinone);
 }
 
@@ -43,14 +37,6 @@ function allinone(weatherObject) {
     document.querySelector('.current').append(createNode(weatherObject, currentObject));
 
     // for (let i = 0; i < 24; i++) {
-    //     const div = document.createElement('div');
-    //     div.classList.add('forecast-item');
-    //     const ico = v.days[0].hours[i].icon;
-    //     const img = document.createElement('img');
-    //     img.src = `./assets/icons/${ico}.svg`;
-    //     img.style.width = '75%';
-    //     // img.style.height = '50px';
-    //     div.append(img, createNode(v, hoursObject(i)));
     //     if (v.currentConditions.datetime.slice(0, 2) == i) {
     //         div.classList.add('now');
     //     }
@@ -77,22 +63,18 @@ function allinone(weatherObject) {
         div.append(radio, label);
         const contendDiv = document.createElement('div');
         contendDiv.classList.add('content', 'hidden')
-        // forecastDiv.classList.add('forecast')
         contendDiv.append(createNode(e, daysObject));
 
         const forecast = document.createElement('div');
         forecast.classList.add('forecast', 'hidden');
         const { hours } = e;
-        // console.log(hours);
-        // e.hours.forEach({
+
         hours.forEach(hour => {
             const div = document.createElement('div');
             div.classList.add('forecast-item');
             const ico = hour.icon;
             const img = document.createElement('img');
             img.src = `./assets/icons/${ico}.svg`;
-            // img.style.width = '50%';
-            //     // img.style.height = '50px';
             div.append(img, createNode(hour, hoursObject(i)));
             // if (v.currentConditions.datetime.slice(0, 2) == i) {
             //     div.classList.add('now');
@@ -115,7 +97,6 @@ function allinone(weatherObject) {
 
     document.querySelectorAll('input[type=radio').forEach(e => e.addEventListener('change', showDayInformation));
     // document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
-
 }
 
 function clear(arr) {
@@ -125,15 +106,12 @@ function clear(arr) {
 }
 
 function success(position) {
-    // console.log('пробуем');
     const { latitude, longitude } = position.coords;
     let geoCodeURL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=59000a9bcd862ca84a9068e14b8820b7`;
     fetcher(geoCodeURL, (response) => {
         document.querySelector('.inptext').value = response[0].local_names.ru;
         const city = document.querySelector('.inptext').value.trim();
-        const currentDate = new Date();
-        const fromDate = currentDate.toISOString().slice(0, 10);
-        const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
+        const { fromDate, toDate } = getCurrentDate();
         let uri = URL + city + "/" + fromDate + "/" + toDate + URLOPTIONS;
         fetcher(uri, allinone);
     });
@@ -150,16 +128,21 @@ function getUserLocation() {
 
 function showDayInformation() {
     const days = document.querySelectorAll('.week-day');
-    // console.dir([...days[0].childNodes].filter(e=>e.localName==='div').forEach(e=>e.classList.remove('hidden')));
-
-    days.forEach(e=>{
-        if (e.children[0].checked){
+    days.forEach(e => {
+        if (e.children[0].checked) {
             e.children[2].classList.remove('hidden');
             e.children[3].classList.remove('hidden');
         }
-        else{
+        else {
             e.children[2].classList.add('hidden');
             e.children[3].classList.add('hidden');
         }
     })
+}
+
+function getCurrentDate() {
+    const currentDate = new Date();
+    const fromDate = currentDate.toISOString().slice(0, 10);
+    const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
+    return { fromDate, toDate };
 }
