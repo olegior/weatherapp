@@ -20,14 +20,24 @@ const URLOPTIONS = "?unitGroup=metric&contentType=json&key=3ZPEQPZUEKMPNDUH3EGZG
 })()
 
 function loadWeather() {
-    const city = document.querySelector('.inptext').value.trim();
-    clear(['.current', 'img', '.week']);
-    // clear(['.current', '.forecast', 'img', '.week']);
-    if (!document.querySelector('.error-message').classList.contains('hidden'))
-        errorMessage();
-    const { fromDate, toDate } = getCurrentDate();
-    let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS}`;
-    fetcher(uri, allinone);
+    try {
+        document.querySelector('#search-btn').setAttribute('disabled', '');
+
+        const city = document.querySelector('.inptext').value.trim();
+        clear(['.current', 'img', '.week']);
+        // clear(['.current', '.forecast', 'img', '.week']);
+        if (!document.querySelector('.error-message').classList.contains('hidden'))
+            errorMessage();
+        document.querySelector('.weatherapp').classList.add('hidden');
+        const { fromDate, toDate } = getCurrentDate();
+        let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS}`;
+        fetcher(uri, allinone);
+    }
+    catch (err) {
+        if (!document.querySelector('.error-message').classList.contains('hidden'))
+            errorMessage();
+        console.log(err);
+    }
 }
 
 function allinone(weatherObject) {
@@ -96,7 +106,20 @@ function allinone(weatherObject) {
     setMap([latitude, longitude]);
 
     document.querySelectorAll('input[type=radio').forEach(e => e.addEventListener('change', showDayInformation));
+    document.querySelectorAll('input[type=radio').forEach(e => e.addEventListener('click', function () {
+        const div = document.querySelector(`.${this.value}`)
+        // console.log(this.checked, div.children[2].classList.contains('hidden'), div.children[3].classList.contains('hidden'))
+        if (this.checked && !div.children[2].classList.contains('hidden') && !div.children[3].classList.contains('hidden')) {
+            this.checked = false;
+            div.children[2].classList.add('hidden');
+            div.children[3].classList.add('hidden');
+            // console.log('opopop');
+        }
+    }));
     // document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
+
+    document.querySelector('#search-btn').removeAttribute('disabled');
+
 }
 
 function clear(arr) {
