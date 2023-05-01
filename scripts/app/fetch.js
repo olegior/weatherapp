@@ -11,11 +11,16 @@ export default async function fetcher(URL, fn) {
     //     errorMessage();
     //     console.log('error', error);
     // })
-    const response = await fetch(URL);
-    if (!response.ok){
-        errorMessage();
-        throw new Error(response.statusText);
+    try {
+        const response = await fetch(URL);
+        if (!response.ok) {
+            errorMessage();
+            throw new Error(response.statusText);
+        }
+        const result = await response.json();
+        fn(result);
     }
-    const result = await response.json();
-    fn(result);
+    catch(err){
+        console.log(err);
+    }
 }

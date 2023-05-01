@@ -12,8 +12,10 @@ const URLOPTIONS = "?unitGroup=metric&contentType=json&key=3ZPEQPZUEKMPNDUH3EGZG
 
 (function addEventListeners() {
     document.querySelector('.inptext').addEventListener('keyup', (e) => {
-        if (e.code === 'Enter' || e.keyCode === 13 || e.keyCode === 10)
+        if (e.code === 'Enter' || e.keyCode === 13 || e.keyCode === 10) {
             loadWeather();
+            document.querySelector('.inptext').setAttribute('disabled', '');
+        }  
     });
     document.querySelector('#search-btn').addEventListener('click', loadWeather);
     document.addEventListener('DOMContentLoaded', getUserLocation);
@@ -26,17 +28,18 @@ function loadWeather() {
         const city = document.querySelector('.inptext').value.trim();
         clear(['.current', 'img', '.week']);
         // clear(['.current', '.forecast', 'img', '.week']);
-        if (!document.querySelector('.error-message').classList.contains('hidden'))
+        if (!document.querySelector('.error-message').classList.contains('hidden')) {
             errorMessage();
+        }
         document.querySelector('.weatherapp').classList.add('hidden');
         const { fromDate, toDate } = getCurrentDate();
         let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS}`;
         fetcher(uri, allinone);
     }
     catch (err) {
-        if (!document.querySelector('.error-message').classList.contains('hidden'))
-            errorMessage();
-        console.log(err);
+        // if (!document.querySelector('.error-message').classList.contains('hidden'))
+        //     errorMessage();
+        // console.log(err);
     }
 }
 
@@ -119,7 +122,7 @@ function allinone(weatherObject) {
     // document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
 
     document.querySelector('#search-btn').removeAttribute('disabled');
-
+    document.querySelector('.inptext').removeAttribute('disabled');
 }
 
 function clear(arr) {
