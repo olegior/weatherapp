@@ -5,7 +5,6 @@ import currentObject from "./scripts/app/currentobject.js";
 import hoursObject from "./scripts/app/hoursobject.js";
 import daysObject from "./scripts/app/daysobject.js";
 import setMap from "./scripts/app/map.js";
-import changeVisibility from './scripts/app/changevisibility.js'
 
 // const FULLURL = "http./scripts/hoursobject.jsing.com/VisualCrossingWebServices/rest/services/timeline/baranovichi/2023-04-02/2023-04-02?unitGroup=metric&key=3ZPEQPZUEKMPNDUH3EGZG9RZ2&contentType=json";
 const URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
@@ -22,7 +21,8 @@ const URLOPTIONS = "?unitGroup=metric&contentType=json&key=3ZPEQPZUEKMPNDUH3EGZG
 
 function loadWeather() {
     const city = document.querySelector('.inptext').value.trim();
-    clear(['.current', '.forecast', 'img', '.week']);
+    clear(['.current', 'img', '.week']);
+    // clear(['.current', '.forecast', 'img', '.week']);
     if (!document.querySelector('.error-message').classList.contains('hidden'))
         errorMessage();
 
