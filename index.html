@@ -22,7 +22,7 @@
 
 <body>
   <div class="form">
-    <input type="text" class="inptext" value="" />
+    <input type="text" class="inptext" placeholder="Ваш город..." />
     <button id="search-btn"><i class="fa-solid fa-search"></i></button>
   </div>
   <div class="wrapper">
@@ -32,21 +32,23 @@
         Произошла ошибка, попробуйте выполнить новый запрос.
       </div>
       <div class="weatherapp hidden">
-        <div class="response section">
-          <div class="img ">
-            <img src="" alt="">
+        <div class="response">
+          <div class="response-current section">
+            <h2>Погода сейчас</h2>
+            <div class="img ">
+              <img src="" alt="">
+            </div>
+            <div class="current">
+            </div>
           </div>
-          <div class="current">
+          <div class="mapbox section">
+            <div id="map"></div>
           </div>
         </div>
-        <div class="forecast section">
-        </div>
-        <div class="week">
 
+        <div class="week section">
         </div>
-        <div class="mapbox section">
-          <div id="map"></div>
-        </div>
+
       </div>
     </div>
   </div>

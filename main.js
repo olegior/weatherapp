@@ -8,108 +8,175 @@ import setMap from "./scripts/app/map.js";
 
 // const FULLURL = "http./scripts/hoursobject.jsing.com/VisualCrossingWebServices/rest/services/timeline/baranovichi/2023-04-02/2023-04-02?unitGroup=metric&key=3ZPEQPZUEKMPNDUH3EGZG9RZ2&contentType=json";
 const URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/";
-const URLOPTIONS = "?unitGroup=metric&contentType=json&key=";
-const APIKEY = "3ZPEQPZUEKMPNDUH3EGZG9RZ2";
-document.querySelector('.inptext').addEventListener('keyup', (e) => {
-    if (e.code === 'Enter')
-        loadWeather();
-});
+const URLOPTIONS = "?unitGroup=metric&contentType=json&key=3ZPEQPZUEKMPNDUH3EGZG9RZ2";
 
-document.querySelector('#search-btn').addEventListener('click', loadWeather);
-
-document.addEventListener('DOMContentLoaded', getUserLocation);
+(function addEventListeners() {
+    document.querySelector('.inptext').addEventListener('keyup', (e) => {
+        // if (e.code === 'Enter' || e.keyCode === 13 || e.keyCode === 10) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
+            loadWeather();
+            document.querySelector('.inptext').setAttribute('disabled', '');
+        }
+    });
+    document.querySelector('#search-btn').addEventListener('click', loadWeather);
+    document.addEventListener('DOMContentLoaded', getUserLocation);
+})()
 
 function loadWeather() {
-    const city = document.querySelector('.inptext').value.trim();
-    clear(['.current', '.forecast', 'img', '.week']);
-    if (!document.querySelector('.error-message').classList.contains('hidden'))
-        errorMessage();
+    try {
+        document.querySelector('#search-btn').setAttribute('disabled', '');
 
-    /// переделать под ф-цию
-    const currentDate = new Date();
-    const fromDate = currentDate.toISOString().slice(0, 10);
-    const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
-    let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS + APIKEY}`;
-    fetcher(uri, allinone);
-
+        const city = document.querySelector('.inptext').value.trim();
+        clear(['.current', 'img', '.week']);
+        // clear(['.current', '.forecast', 'img', '.week']);
+        if (!document.querySelector('.error-message').classList.contains('hidden')) {
+            errorMessage();
+        }
+        document.querySelector('.weatherapp').classList.add('hidden');
+        const { fromDate, toDate } = getCurrentDate();
+        let uri = `${URL + city}/${fromDate}/${toDate + URLOPTIONS}`;
+        fetcher(uri, allinone);
+    }
+    catch (err) {
+        // if (!document.querySelector('.error-message').classList.contains('hidden'))
+        //     errorMessage();
+        // console.log(err);
+    }
 }
 
-function allinone(v) {
-    // console.dir(v);
-    const ico = v.currentConditions.icon;
+function allinone(weatherObject) {
+    // console.dir(weatherObject);
+    const ico = weatherObject.currentConditions.icon;
     document.querySelector('img').src = `./assets/icons/${ico}.svg`;
-    document.querySelector('img').style.width = '100%'
-    document.querySelector('.current').append(createNode(v, currentObject))
+    document.querySelector('.current').append(createNode(weatherObject, currentObject));
 
-    for (let i = 0; i < 24; i++) {
-        const div = document.createElement('div');
-        div.classList.add('forecast-item');
-        const ico = v.days[0].hours[i].icon;
-        const img = document.createElement('img');
-        img.src = `./assets/icons/${ico}.svg`;
-        img.style.width = '75%';
-        // img.style.height = '50px';
-        div.append(img, createNode(v, hoursObject(i)));
-        if (v.currentConditions.datetime.slice(0, 2) == i) {
-            div.classList.add('now');
-        }
-        document.querySelector('.forecast').append(div);
-    }
+    // for (let i = 0; i < 24; i++) {
+    //     if (v.currentConditions.datetime.slice(0, 2) == i) {
+    //         div.classList.add('now');
+    //     }
+    //     document.querySelector('.forecast').append(div);
+    // }
 
-    const { latitude, longitude } = v;
+    const { latitude, longitude } = weatherObject;
 
-    const days = [...v.days];
+    const days = [...weatherObject.days];
     // console.log(days);
     days.forEach((e, i) => {
         const div = document.createElement('div');
-        div.classList.add('week-item', 'section');
-        // div.append(createNode(e, daysObject), document.createElement('hr'));
-        div.append(createNode(e, daysObject));
-        if (i !== 0)
-            document.querySelector('.week').append(div);
+        div.classList.add('week-day', 'item');
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'week-radio';
+        radio.id = 'day-' + i;
+        radio.value = radio.id;
+        const label = document.createElement('label');
+        label.setAttribute('for', radio.id);
+
+        label.innerHTML = `<i class="fa-regular fa-calendar-days"></i> ${new Date(e.datetime).toLocaleDateString()}`;
+
+        div.append(radio, label);
+        const contendDiv = document.createElement('div');
+        contendDiv.classList.add('content', 'hidden')
+        contendDiv.append(createNode(e, daysObject));
+
+
+        // console.log(data);
+        const forecast = document.createElement('div');
+        forecast.classList.add('forecast', 'hidden');
+        const { hours } = e;
+
+        hours.forEach(hour => {
+            const div = document.createElement('div');
+            div.classList.add('forecast-item');
+            const ico = hour.icon;
+            const img = document.createElement('img');
+            img.src = `./assets/icons/${ico}.svg`;
+            div.append(img, createNode(hour, hoursObject(i)));
+            // if (v.currentConditions.datetime.slice(0, 2) == i) {
+            //     div.classList.add('now');
+            // }
+            forecast.append(div);
+        })
+        // })
+
+        div.append(contendDiv, forecast);
+
+        document.querySelector('.week').append(div);
+        div.classList.add(radio.id)
+        // const { description } = e;
+        // const data = fetcher(`https://api.mymemory.translated.net/get?q=${description}&langpair=en|ru`, (result) => result.responseData.translatedText);
+        // document.querySelector('.radio.id').insertAdjacentHTML('afterbegin', `<h2>${data}</h2>`);
     })
-    setMap([latitude, longitude]);
 
     const weather = document.querySelector('.weatherapp');
     if (weather.classList.contains('hidden'))
         weather.classList.remove('hidden');
 
+    setMap([latitude, longitude]);
 
-    document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
+    document.querySelector('.week').insertAdjacentHTML('afterbegin', '<h2>Погода на неделю</h2>');
 
+    document.querySelectorAll('input[type=radio').forEach(e => e.addEventListener('change', showDayInformation));
+    document.querySelectorAll('input[type=radio').forEach(e => e.addEventListener('click', function () {
+        const div = document.querySelector(`.${this.value}`)
+        // console.log(this.checked, div.children[2].classList.contains('hidden'), div.children[3].classList.contains('hidden'))
+        if (this.checked && !div.children[2].classList.contains('hidden') && !div.children[3].classList.contains('hidden')) {
+            this.checked = false;
+            div.children[2].classList.add('hidden');
+            div.children[3].classList.add('hidden');
+            // console.log('opopop');
+        }
+    }));
+    // document.querySelector('.now').scrollIntoView({ behavior: "smooth", inline: 'center' });
+
+    document.querySelector('#search-btn').removeAttribute('disabled');
+    document.querySelector('.inptext').removeAttribute('disabled');
 }
 
 function clear(arr) {
     arr.forEach(e => {
         document.querySelector(e).innerHTML = '';
     })
-
 }
 
 function success(position) {
-    // console.log('пробуем');
     const { latitude, longitude } = position.coords;
     let geoCodeURL = `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&appid=59000a9bcd862ca84a9068e14b8820b7`;
-    fetcher(geoCodeURL, (r) => {
-        document.querySelector('.inptext').value = r[0].local_names.ru;
+    fetcher(geoCodeURL, (response) => {
+        document.querySelector('.inptext').value = response[0].local_names.ru;
         const city = document.querySelector('.inptext').value.trim();
-        const currentDate = new Date();
-        const fromDate = currentDate.toISOString().slice(0, 10);
-        const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
-
-        let uri = URL + city + "/" + fromDate + "/" + toDate + URLOPTIONS + APIKEY;
+        const { fromDate, toDate } = getCurrentDate();
+        let uri = URL + city + "/" + fromDate + "/" + toDate + URLOPTIONS;
         fetcher(uri, allinone);
-        // setMap([latitude,longitude]);
-
     });
 
 }
 
 function error() {
-    console.log('Не удалось получить доступ к геоданным');
+    console.log('Не удалось получить доступ к геоданным...');
 }
-
 
 function getUserLocation() {
     navigator.geolocation.getCurrentPosition(success, error);
+}
+
+function showDayInformation() {
+    const days = document.querySelectorAll('.week-day');
+    days.forEach(e => {
+        if (e.children[0].checked) {
+            e.children[2].classList.remove('hidden');
+            e.children[3].classList.remove('hidden');
+        }
+        else {
+            e.children[2].classList.add('hidden');
+            e.children[3].classList.add('hidden');
+        }
+    })
+}
+
+function getCurrentDate() {
+    const currentDate = new Date();
+    const fromDate = currentDate.toISOString().slice(0, 10);
+    const toDate = new Date(currentDate.setDate(currentDate.getDate() + 6)).toISOString().slice(0, 10);
+    return { fromDate, toDate };
 }
