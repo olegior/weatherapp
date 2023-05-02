@@ -12,10 +12,11 @@ const URLOPTIONS = "?unitGroup=metric&contentType=json&key=3ZPEQPZUEKMPNDUH3EGZG
 
 (function addEventListeners() {
     document.querySelector('.inptext').addEventListener('keyup', (e) => {
-        if (e.code === 'Enter' || e.keyCode === 13 || e.keyCode === 10) {
+        // if (e.code === 'Enter' || e.keyCode === 13 || e.keyCode === 10) {
+        if (e.code === 'Enter' || e.keyCode === 13) {
             loadWeather();
             document.querySelector('.inptext').setAttribute('disabled', '');
-        }  
+        }
     });
     document.querySelector('#search-btn').addEventListener('click', loadWeather);
     document.addEventListener('DOMContentLoaded', getUserLocation);
@@ -78,6 +79,8 @@ function allinone(weatherObject) {
         contendDiv.classList.add('content', 'hidden')
         contendDiv.append(createNode(e, daysObject));
 
+
+        // console.log(data);
         const forecast = document.createElement('div');
         forecast.classList.add('forecast', 'hidden');
         const { hours } = e;
@@ -97,16 +100,21 @@ function allinone(weatherObject) {
         // })
 
         div.append(contendDiv, forecast);
-        // if (i !== 0)
+
         document.querySelector('.week').append(div);
         div.classList.add(radio.id)
+        // const { description } = e;
+        // const data = fetcher(`https://api.mymemory.translated.net/get?q=${description}&langpair=en|ru`, (result) => result.responseData.translatedText);
+        // document.querySelector('.radio.id').insertAdjacentHTML('afterbegin', `<h2>${data}</h2>`);
     })
-
 
     const weather = document.querySelector('.weatherapp');
     if (weather.classList.contains('hidden'))
         weather.classList.remove('hidden');
+
     setMap([latitude, longitude]);
+
+    document.querySelector('.week').insertAdjacentHTML('afterbegin', '<h2>Погода на неделю</h2>');
 
     document.querySelectorAll('input[type=radio').forEach(e => e.addEventListener('change', showDayInformation));
     document.querySelectorAll('input[type=radio').forEach(e => e.addEventListener('click', function () {
